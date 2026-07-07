@@ -1,13 +1,24 @@
+/* Добавьте :root переменные для switch */
 :root {
   --background-color: #ffffff;
   --text-color: #1a1a1a;
   --nav-bg: #f8f9fa;
+  
+  /* Переменные для switch */
+  --hue: 223;
+  --trans-dur: 0.4s;
+  --trans-timing: cubic-bezier(0.65, 0, 0.35, 1);
+  --switch-bg: #e0e0e0;
+  --switch-checked-bg: #c0c0c0;
 }
 
 body.dark {
   --background-color: #121212;
   --text-color: #f5f5f5;
   --nav-bg: #1e1e1e;
+  
+  --switch-bg: #404040;
+  --switch-checked-bg: #606060;
 }
 
 body {
@@ -37,17 +48,183 @@ body {
     gap: 15px;
   }
 
-  .navigation-btn_theme {
-    border: 1px solid gray;
-    border-radius: 10px;
-    padding: 5px;
-    display: flex;
-    align-items: center;
-    background-color: var(--background-color);
-  }
-
   a {
     color: var(--text-color);
     text-decoration: none;
   }
+}
+
+/* ===== SWITCH STYLES ===== */
+.switch {
+  display: inline-block;
+  position: relative;
+  -webkit-tap-highlight-color: transparent;
+  width: 3em;
+  height: 1.5em;
+}
+
+.switch__input {
+  position: relative;
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: var(--switch-bg);
+  border-radius: 0.75em;
+  cursor: pointer;
+  display: block;
+  width: 100%;
+  height: 100%;
+  transition: background-color var(--trans-dur) var(--trans-timing);
+  border: none;
+  outline: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Убираем :before у input */
+.switch__input:before {
+  display: none;
+}
+
+.switch__icon {
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 0.125em;
+  width: 1.25em;
+  height: 1.25em;
+  border-radius: 50%;
+  background-color: var(--background-color);
+  overflow: hidden;
+  pointer-events: none;
+  transform: translateY(-50%);
+  transition: transform var(--trans-dur) var(--trans-timing);
+}
+
+.switch__input:checked ~ .switch__icon {
+  transform: translate(1.5em, -50%);
+}
+
+.switch__icon-part {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: box-shadow var(--trans-dur) var(--trans-timing),
+    transform var(--trans-dur) var(--trans-timing);
+}
+
+.switch__icon-part--1,
+.switch__icon-part--2,
+.switch__icon-part--3 {
+  border-radius: 50%;
+}
+
+.switch__icon-part--1 {
+  background-color: var(--background-color);
+  top: calc(50% - 0.375em);
+  left: calc(50% - 0.375em);
+  width: 0.75em;
+  height: 0.75em;
+}
+
+.switch__icon-part--2 {
+  background-color: var(--text-color);
+  top: calc(50% - 0.4375em);
+  left: calc(50% - 0.0625em);
+  width: 0.5em;
+  height: 0.5em;
+  transform: translate(-0.1875em, 0.1875em) scale(0.2);
+}
+
+.switch__icon-part--3 {
+  box-shadow: 0 0 0 0.625em var(--text-color) inset;
+  width: 1.25em;
+  height: 1.25em;
+  transform: scale(0.25);
+}
+
+.switch__icon-part--3 ~ .switch__icon-part {
+  background-color: var(--text-color);
+  border-radius: 0.0625em;
+  top: 50%;
+  left: 50%;
+  width: 0.125em;
+  height: 0.1875em;
+  transform-origin: 50% 0;
+}
+
+.switch__icon-part--4 {
+  transform: translateX(-50%) rotate(0) translateY(0.25em);
+}
+.switch__icon-part--5 {
+  transform: translateX(-50%) rotate(45deg) translateY(0.25em);
+}
+.switch__icon-part--6 {
+  transform: translateX(-50%) rotate(90deg) translateY(0.25em);
+}
+.switch__icon-part--7 {
+  transform: translateX(-50%) rotate(135deg) translateY(0.25em);
+}
+.switch__icon-part--8 {
+  transform: translateX(-50%) rotate(180deg) translateY(0.25em);
+}
+.switch__icon-part--9 {
+  transform: translateX(-50%) rotate(225deg) translateY(0.25em);
+}
+.switch__icon-part--10 {
+  transform: translateX(-50%) rotate(270deg) translateY(0.25em);
+}
+.switch__icon-part--11 {
+  transform: translateX(-50%) rotate(315deg) translateY(0.25em);
+}
+
+.switch__sr {
+  overflow: hidden;
+  position: absolute;
+  width: 1px;
+  height: 1px;
+}
+
+/* `:checked` state */
+.switch__input:checked {
+  background-color: var(--switch-checked-bg);
+}
+
+.switch__input:checked ~ .switch__icon .switch__icon-part--2 {
+  transform: translate(0, 0) scale(1);
+}
+
+.switch__input:checked ~ .switch__icon .switch__icon-part--3 {
+  box-shadow: 0 0 0 0.25em var(--text-color) inset;
+  transform: scale(1);
+}
+
+.switch__input:checked ~ .switch__icon .switch__icon-part--4 {
+  transform: translateX(-50%) rotate(0) translateY(0.625em) scale(0);
+}
+.switch__input:checked ~ .switch__icon .switch__icon-part--5 {
+  transform: translateX(-50%) rotate(45deg) translateY(0.625em) scale(0);
+}
+.switch__input:checked ~ .switch__icon .switch__icon-part--6 {
+  transform: translateX(-50%) rotate(90deg) translateY(0.625em) scale(0);
+}
+.switch__input:checked ~ .switch__icon .switch__icon-part--7 {
+  transform: translateX(-50%) rotate(135deg) translateY(0.625em) scale(0);
+}
+.switch__input:checked ~ .switch__icon .switch__icon-part--8 {
+  transform: translateX(-50%) rotate(180deg) translateY(0.625em) scale(0);
+}
+.switch__input:checked ~ .switch__icon .switch__icon-part--9 {
+  transform: translateX(-50%) rotate(225deg) translateY(0.625em) scale(0);
+}
+.switch__input:checked ~ .switch__icon .switch__icon-part--10 {
+  transform: translateX(-50%) rotate(270deg) translateY(0.625em) scale(0);
+}
+.switch__input:checked ~ .switch__icon .switch__icon-part--11 {
+  transform: translateX(-50%) rotate(315deg) translateY(0.625em) scale(0);
+}
+
+/* Удаляем старую кнопку если она есть */
+.navigation-btn_theme {
+  display: none !important;
 }
